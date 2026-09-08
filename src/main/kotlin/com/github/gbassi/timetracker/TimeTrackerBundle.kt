@@ -13,7 +13,7 @@ private const val BUNDLE = "messages.TimeTrackerBundle"
  * ([BUNDLE]); `TimeTrackerBundle_it.properties` provides the Italian override and
  * is picked up automatically when the IDE runs with an Italian locale.
  */
-object TimeTrackerBundle : DynamicBundle(BUNDLE) {
+object TimeTrackerBundle : DynamicBundle(TimeTrackerBundle::class.java, BUNDLE) {
 
     @JvmStatic
     @Nls
