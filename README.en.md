@@ -59,17 +59,6 @@ the zip in `build/distributions/`.
 | Start tracking on checkout | off | If off, checkout only creates the entry |
 | Pause on branch switch | on | Pause the active entry when you switch branch |
 
-## Publishing to the JetBrains Marketplace
-
-1. `./gradlew clean test verifyPlugin buildPlugin` → zip in `build/distributions/`.
-2. Create a vendor profile at <https://plugins.jetbrains.com> (JetBrains account).
-3. **First upload is manual**: *Upload plugin* on the site, choose category and license (MIT).
-   A few business days of moderation follow.
-4. Later updates: `PUBLISH_TOKEN=... ./gradlew publishPlugin` (token already wired in
-   `build.gradle.kts`). To sign: `chain.crt` + `private.pem` + `PRIVATE_KEY_PASSWORD`.
-
-`untilBuild` is intentionally open (`null`): the plugin only uses stable APIs. If an IDE update
-breaks something, publish a new build or set an upper bound.
 
 ## Project layout
 
