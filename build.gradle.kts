@@ -71,6 +71,7 @@ intellijPlatform {
             // Pin explicit targets: `recommended()` chases the latest release and
             // breaks around EAP windows when that build is not published yet.
             ide(providers.gradleProperty("platformType"), providers.gradleProperty("platformVersion"))
+            ide("IC", "2025.2")
         }
     }
 }
