@@ -1,0 +1,60 @@
+<idea-plugin>
+    <id>com.github.gbassi.timetracker</id>
+    <name>Branch Time Tracker</name>
+    <vendor email="gabriele.bassi9@gmail.com">Gabriele Bassi</vendor>
+
+    <description><![CDATA[
+        <p>Tracks the time you spend working on the <b>Git branches</b> of your projects, across every
+        open project in a single IDE-wide view.</p>
+        <ul>
+            <li>Automatically creates a tracking entry when you check out a branch — or add one manually.</li>
+            <li>Start, pause, stop and delete tracking for each branch; only one timer runs at a time.</li>
+            <li>Automatic pause on IDE inactivity, on branch switch and on IDE shutdown, so idle and
+                overnight hours are not counted.</li>
+            <li>Daily summary with a per-project and per-branch breakdown, day-by-day navigation and
+                last-7-days totals.</li>
+        </ul>
+        <p>Data is stored locally in <code>&lt;config&gt;/options/branchTimeTracker.xml</code>.
+        The UI is available in English and Italian.</p>
+    ]]></description>
+
+    <change-notes><![CDATA[
+        <ul>
+            <li><b>1.0.0</b> — Initial release: automatic and manual branch tracking, idle/branch-switch/shutdown
+                auto-pause, daily summary. English and Italian UI.</li>
+        </ul>
+    ]]></change-notes>
+
+    <depends>com.intellij.modules.platform</depends>
+    <depends>Git4Idea</depends>
+
+    <resource-bundle>messages.TimeTrackerBundle</resource-bundle>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <applicationService serviceImplementation="com.github.gbassi.timetracker.service.TimeTrackerService"/>
+
+        <toolWindow id="Time Tracker"
+                    anchor="right"
+                    icon="AllIcons.Vcs.History"
+                    factoryClass="com.github.gbassi.timetracker.ui.TimeTrackerToolWindowFactory"/>
+
+        <postStartupActivity implementation="com.github.gbassi.timetracker.listeners.TrackerStartupActivity"/>
+
+        <applicationConfigurable
+            parentId="tools"
+            instance="com.github.gbassi.timetracker.settings.TimeTrackerConfigurable"
+            id="com.github.gbassi.timetracker.settings.TimeTrackerConfigurable"
+            key="configurable.name"
+            bundle="messages.TimeTrackerBundle"/>
+    </extensions>
+
+    <applicationListeners>
+        <listener class="com.github.gbassi.timetracker.listeners.AppCloseListener"
+                  topic="com.intellij.ide.AppLifecycleListener"/>
+    </applicationListeners>
+
+    <projectListeners>
+        <listener class="com.github.gbassi.timetracker.git.BranchWatcher"
+                  topic="git4idea.repo.GitRepositoryChangeListener"/>
+    </projectListeners>
+</idea-plugin>
